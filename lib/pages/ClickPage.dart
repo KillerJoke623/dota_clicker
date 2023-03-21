@@ -16,18 +16,18 @@ class ClickPage extends StatefulWidget {
   // ClickPage({required Key key}) : super(key: key);
   // GlobalKey<_ClickPageState> _myKey = GlobalKey();
 
-  double money = 0;
+  ValueNotifier<double> money = ValueNotifier<double>(0);
 
   double tresPercents = 0;
   double tresPercentsLimit = 100;
 
 
   double get getMoney{
-    return money;
+    return money.value;
   }
 
   setMoney(double nMoney){
-    money=nMoney;
+    money.value=nMoney;
   }
 
   double get getPercents{
@@ -70,7 +70,13 @@ class _ClickPageState extends State<ClickPage> {
             Flexible(flex: 1,
                 child:Text('Earn money')),
             Flexible(flex: 10,
-              child:ElevatedButton(onPressed: incrementMoney,child: Text(textAlign: TextAlign.center,'\$'+'${clickPage.money.toStringAsFixed(3)}\n'+'\$'+'${updPage.moneyPerClick.toStringAsFixed(3)} for click\n'+'\$'+'${updPage.moneyPerSecond.toStringAsFixed(3)} per second'), style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, double.infinity)),)),
+              child:ElevatedButton(onPressed: incrementMoney,
+                  child: AnimatedBuilder(
+                // [AnimatedBuilder] accepts any [Listenable] subtype.
+                  animation: clickPage.money,
+                  builder: (BuildContext context, Widget? child) {
+                    return Text('${clickPage.money.value}');
+                  }), style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, double.infinity)),)),
             Flexible(flex: 1,
                 child:Text('Find treasures')),
             Flexible(flex: 10,
@@ -85,7 +91,7 @@ class _ClickPageState extends State<ClickPage> {
 
   void incrementMoney() {
     setState(() {
-      clickPage.setMoney(clickPage.money+updPage.getMoneyPerClick);
+      clickPage.setMoney(clickPage.money.value+updPage.getMoneyPerClick);
     });
   }
 
@@ -95,13 +101,13 @@ class _ClickPageState extends State<ClickPage> {
     });
   }
 
-  void startMoneyPerSecond() {
-    setState(() {
-      Timer.periodic(Duration(seconds:1), (timer) {
-        clickPage.setMoney(clickPage.money+updPage.getMoneyPerSecond);
-      });
-    });
-  }
+  // void startMoneyPerSecond() {
+  //   setState(() {
+  //     Timer.periodic(Duration(seconds:1), (timer) {
+  //       clickPage.setMoney(clickPage.money.+updPage.getMoneyPerSecond);
+  //     });
+  //   });
+  // }
 
 
 }

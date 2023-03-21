@@ -3,12 +3,18 @@ import 'package:flutter/services.dart';
 
 import 'pages/ClickPage.dart';
 import 'package:dota_clicker/pages/UpdatePage.dart';
+import 'pages/TreasuresPage.dart';
+
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
 
 
 void main(){
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -85,7 +91,7 @@ class _NavRailExampleState extends State<NavRailExample> {
       case 0:
         return clickPage;
       case 1:
-        return clickPage;
+        return TreasuresPage();
       case 2:
         return updPage;
       case 3:

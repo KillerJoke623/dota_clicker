@@ -137,17 +137,17 @@ class _UpdatePageState extends State<UpdatePage> {
     }
 
     void upgradeMoneyPerClick() {
-      if (clickPage.money>=costUpgradeMoneyPerClick){
+      if (clickPage.money.value>=costUpgradeMoneyPerClick){
       setState(() {
-        clickPage.setMoney(clickPage.money-costUpgradeMoneyPerClick);
-        costUpgradeMoneyPerClick=costUpgradeMoneyPerClick*1.5;
+        clickPage.setMoney(clickPage.money.value-costUpgradeMoneyPerClick);
+        costUpgradeMoneyPerClick*=1.5;
         updPage.setMoneyPerClick(updPage.moneyPerClick+1);
       });
       }
     }
     void upgradePercentPerClick() {
       setState(() {
-        clickPage.setMoney(clickPage.money-costUpgradePercentPerClick);
+        clickPage.setMoney(clickPage.money.value-costUpgradePercentPerClick);
         costUpgradeMoneyPerClick=costUpgradeMoneyPerClick*1.5;
         updPage.setPercentsPerClick(updPage.getPercentsPerClick+1);
       });
@@ -155,13 +155,13 @@ class _UpdatePageState extends State<UpdatePage> {
 
     void upgradeMoneyPerSecond() {
     setState(() {
-      clickPage.setMoney(clickPage.money-costUpgradeMoneyPerSecond);
+      clickPage.setMoney(clickPage.money.value-costUpgradeMoneyPerSecond);
       costUpgradeMoneyPerSecond=costUpgradeMoneyPerSecond*1.5;
       if(updPage.getMoneyPerSecond==0.0){
         //Here i need to invoke this method
         //clickPage.invokeStartMoneyPerSecond();
         //myKey.currentState!.startMoneyPerSecond();
-
+        startMoneyPerSecond();
 
       }
       updPage.setMoneyPerSecond(updPage.getMoneyPerSecond+1);
@@ -169,17 +169,17 @@ class _UpdatePageState extends State<UpdatePage> {
     });
     }
 
-  // void startMoneyPerSecond() {
-  //   setState(() {
-  //     Timer.periodic(Duration(seconds:1), (timer) {
-  //       clickPage.setMoney(clickPage.money+updPage.getMoneyPerSecond);
-  //     });
-  //   });
-  // }
+  void startMoneyPerSecond() {
+    setState(() {
+      Timer.periodic(Duration(seconds:1), (timer) {
+        clickPage.setMoney(clickPage.money.value+updPage.getMoneyPerSecond);
+      });
+    });
+  }
 
     void upgradePercentPerSecond() {
     setState(() {
-      clickPage.setMoney(clickPage.money-costUpgradePercentPerSecond);
+      clickPage.setMoney(clickPage.money.value-costUpgradePercentPerSecond);
       costUpgradePercentPerSecond=costUpgradePercentPerSecond*1.5;
       updPage.setPercentsPerSecond(updPage.getPercentsPerSecond+1);
 
